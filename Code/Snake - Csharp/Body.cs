@@ -21,17 +21,6 @@ namespace SnakeGame
             this.YPosition = y;
         }
 
-        public void MakeSnake(List<Body> BodyParts)
-        {
-            int x = BodyParts[0].XPosition;
-            int y = BodyParts[0].YPosition;
-            for (int i = 0; i <= 3; i++)
-            {
-                Body TempPart = new Body(x - (40 * i), y - (40 * 1));
-                BodyParts.Add(TempPart);
-            }
-        }
-
         public int[] MoveHead(int direction) 
         {
             int[] movement = new int[2];
@@ -63,17 +52,28 @@ namespace SnakeGame
 
         }
 
-        public void MoveBody(List<Body> BodyParts) 
-        {                                              
-            for (int i = 1; i < BodyParts.Count; i++)
+
+        public void GrowSnake(List<Body> BodyParts)
+        {
+            int length = BodyParts.Count - 1;
+            int x = BodyParts[length].XPosition;
+            int y = BodyParts[length].YPosition;
+
+            BodyParts.Add(new Body(x, y));
+        }
+
+        public void SnakeCreate(List<Body> BodyParts)
+        {
+            int x = BodyParts[0].XPosition;
+            int y = BodyParts[0].YPosition;
+            for (int i = 0; i <= 3; i++)
             {
-                BodyParts[i].LastXPosition = BodyParts[i].XPosition;
-                BodyParts[i].LastYPosition = BodyParts[i].YPosition;
-                BodyParts[i].XPosition = BodyParts[i - 1].LastXPosition;
-                BodyParts[i].YPosition = BodyParts[i - 1].LastYPosition;
+                Body TemporaryPart = new Body(x - (40 * i), y - (40 * 1));
+                BodyParts.Add(TemporaryPart);
             }
         }
 
+     
         public Boolean SnakeCollision(List<Body> BodyParts)
         { 
             for (int i = 1; i < BodyParts.Count; i++)
@@ -93,14 +93,18 @@ namespace SnakeGame
             return collide;
         }
 
-        public void GrowSnake(List<Body> BodyParts) 
-        {                                                
-            int length = BodyParts.Count - 1;
-            int x = BodyParts[length].XPosition;
-            int y = BodyParts[length].YPosition;
-
-            BodyParts.Add(new Body(x, y));
+        public void MoveBody(List<Body> BodyParts)
+        {
+            for (int i = 1; i < BodyParts.Count; i++)
+            {
+                BodyParts[i].LastXPosition = BodyParts[i].XPosition;
+                BodyParts[i].LastYPosition = BodyParts[i].YPosition;
+                BodyParts[i].XPosition = BodyParts[i - 1].LastXPosition;
+                BodyParts[i].YPosition = BodyParts[i - 1].LastYPosition;
+            }
         }
+
+
         
     }
 }

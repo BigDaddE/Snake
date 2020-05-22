@@ -6,52 +6,11 @@ namespace SnakeGame
 {
     public class Food
     {
-        Random r = new Random();
+        Random rand = new Random();
         int x;
         int y;
-
-        public int XPosition
-        {
-            get
-            {
-                return x;
-            }
-            set
-            {
-                x = value;
-            }
-        }
-        public int YPosition
-        {
-            get
-            {
-                return y;
-            }
-            set
-            {
-                y = value;
-            }
-        }
-
-        public Rectangle GenerateFood(List<Body> BodyParts)
-        {
-            Boolean FreeSquare = false;
-            while (!FreeSquare)
-            {
-                x = r.Next(1, 18) * 40; // 40 för att varje block är 40px hög och bred
-                y = r.Next(1, 13) * 40;
-
-                if (BodyParts.Exists(part => (part.XPosition == x && part.YPosition == y)))
-                {
-                }
-                else
-                {
-                    FreeSquare = true;
-                    break;
-                }
-            }
-            return new Rectangle(x, y, 40, 40);
-        }
+        public int XPosition;
+        public int YPosition;
 
         public Boolean EatFood(Rectangle Snake, Rectangle Food)
         {
@@ -64,5 +23,25 @@ namespace SnakeGame
                 return false;
             }
         }
+
+
+        public Rectangle GenerateFood(List<Body> BodyParts)
+        {
+            Boolean OccupiedSquare = true;
+            while (OccupiedSquare)
+            {
+                x = rand.Next(1, 18) * 40; // 40 för att varje block är 40px hög och bred
+                y = rand.Next(1, 13) * 40;
+
+                if (!BodyParts.Exists(part => (part.XPosition == x && part.YPosition == y)))
+                {
+                    OccupiedSquare = false;
+                    break;
+                }
+               
+            }
+            return new Rectangle(x, y, 40, 40);
+        }
+
     }
 }

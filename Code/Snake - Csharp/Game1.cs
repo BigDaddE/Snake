@@ -61,9 +61,9 @@ namespace SnakeGame
         protected override void Initialize()
         {
             BodyParts.Clear();
-            Snake1 = new Body(400, 300);
+            Snake1 = new Body(120, 400);
             BodyParts.Add(Snake1);
-            Snake1.MakeSnake(BodyParts);
+            Snake1.SnakeCreate(BodyParts);
 
             FoodPosition = Food.GenerateFood(BodyParts);
 
@@ -85,14 +85,14 @@ namespace SnakeGame
 
         void Reset()
         {
-            BodyParts.Clear();
-            Snake1 = new Body(120, 400);
-            BodyParts.Add(Snake1);
-            Snake1.MakeSnake(BodyParts);
             direction = Direction.RIGHT;
             newDirection = Direction.RIGHT;
             GameOver = false;
             gameScore = 0;
+            BodyParts.Clear();
+            Snake1 = new Body(120, 400);
+            BodyParts.Add(Snake1);
+            Snake1.SnakeCreate(BodyParts);
         }
 
 
